@@ -1,0 +1,60 @@
+{
+  "name": "dynamics-contact-form-scripts",
+  "version": "1.0.0",
+  "description": "Dynamics 365 CE Contact Form Scripts with Conditional Field Visibility",
+  "main": "src/Contact/FormScripts/ContactFormScript.js",
+  "scripts": {
+    "test": "jasmine",
+    "test:watch": "jasmine --watch",
+    "lint": "jshint src/Contact/FormScripts/*.js tests/Contact/*.js",
+    "build": "echo 'No build process required for Dynamics 365 scripts'",
+    "pretest": "echo 'Running pre-test validation...'",
+    "posttest": "echo 'Tests completed'"
+  },
+  "keywords": [
+    "dynamics365",
+    "crm",
+    "contact-form",
+    "conditional-visibility",
+    "ai-driven-testing"
+  ],
+  "author": "AI-Driven Development Team",
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine": "^4.0.0",
+    "jshint": "^2.13.0"
+  },
+  "jasmine": {
+    "spec_dir": "tests",
+    "spec_files": [
+      "**/*.test.js"
+    ],
+    "helpers": [
+      "helpers/**/*.js"
+    ]
+  },
+  "jshintConfig": {
+    "esversion": 6,
+    "browser": true,
+    "node": true,
+    "evil": true,
+    "globals": {
+      "console": true,
+      "ContactFormScript": true,
+      "describe": true,
+      "it": true,
+      "beforeEach": true,
+      "expect": true,
+      "jasmine": true,
+      "spyOn": true
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Techiemation/Dynamics-and-Plugins.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Techiemation/Dynamics-and-Plugins/issues"
+  },
+  "homepage": "https://github.com/Techiemation/Dynamics-and-Plugins#readme"
+}
