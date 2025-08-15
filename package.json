@@ -1,0 +1,36 @@
+{
+  "name": "dynamics-contact-form-scripts",
+  "version": "1.0.0",
+  "description": "Dynamics 365 CE Contact Form Scripts with Test-Case Driven Development",
+  "main": "src/Contact/Forms/Scripts/ContactFormScript.js",
+  "scripts": {
+    "test": "node tests/run-tests.js",
+    "test:browser": "echo 'Open tests/TestRunner.html in your browser'",
+    "validate": "node tests/run-tests.js && echo 'All validation checks passed!'"
+  },
+  "keywords": [
+    "dynamics365",
+    "crm",
+    "javascript",
+    "form-scripts",
+    "test-driven-development",
+    "conditional-visibility"
+  ],
+  "author": "AI Development Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Techiemation/Dynamics-and-Plugins.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Techiemation/Dynamics-and-Plugins/issues"
+  },
+  "homepage": "https://github.com/Techiemation/Dynamics-and-Plugins#readme",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "directories": {
+    "test": "tests",
+    "doc": "docs"
+  }
+}

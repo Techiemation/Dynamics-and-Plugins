@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+Contact Form XML Configuration Example
+Requirement: FRD-UI-001 - Conditional Field Visibility
+
+This XML snippet shows how to configure the Contact form with the required fields
+and web resource reference for the conditional visibility functionality.
+-->
+<form>
+  <tabs>
+    <tab id="{general}" name="General">
+      <labels>
+        <label description="General" languagecode="1033" />
+      </labels>
+      <columns>
+        <column width="100%">
+          <sections>
+            <section id="{contact_information}" name="Contact Information" showlabel="false" showbar="false" columns="2">
+              <labels>
+                <label description="Contact Information" languagecode="1033" />
+              </labels>
+              
+              <!-- Standard Contact Fields -->
+              <rows>
+                <row>
+                  <cell id="{firstname_cell}">
+                    <labels>
+                      <label description="First Name" languagecode="1033" />
+                    </labels>
+                    <control id="firstname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="firstname" />
+                  </cell>
+                  <cell id="{lastname_cell}">
+                    <labels>
+                      <label description="Last Name" languagecode="1033" />
+                    </labels>
+                    <control id="lastname" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="lastname" />
+                  </cell>
+                </row>
+                <row>
+                  <cell id="{emailaddress1_cell}">
+                    <labels>
+                      <label description="Email" languagecode="1033" />
+                    </labels>
+                    <control id="emailaddress1" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="emailaddress1" />
+                  </cell>
+                  <cell />
+                </row>
+                
+                <!-- Has Secondary Email Checkbox - FRD-UI-001 -->
+                <row>
+                  <cell id="{new_hassecondaryemail_cell}">
+                    <labels>
+                      <label description="Has Secondary Email?" languagecode="1033" />
+                    </labels>
+                    <control id="new_hassecondaryemail" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="new_hassecondaryemail" />
+                  </cell>
+                  <cell />
+                </row>
+                
+                <!-- Secondary Email Field - FRD-UI-001 (conditionally visible) -->
+                <row>
+                  <cell id="{new_secondaryemail_cell}">
+                    <labels>
+                      <label description="Secondary Email" languagecode="1033" />
+                    </labels>
+                    <control id="new_secondaryemail" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="new_secondaryemail" />
+                  </cell>
+                  <cell />
+                </row>
+              </rows>
+            </section>
+          </sections>
+        </column>
+      </columns>
+    </tab>
+  </tabs>
+  
+  <!-- Form Libraries - Add web resource reference -->
+  <formLibraries>
+    <Library name="new_ContactFormScript" libraryUniqueId="{GUID-FOR-WEB-RESOURCE}" />
+  </formLibraries>
+  
+  <!-- Form Events - Register OnLoad handler -->
+  <events>
+    <event name="onload" application="true" active="true">
+      <Handlers>
+        <Handler functionName="ContactFormScript.FormEvents.onLoad" 
+                 libraryName="new_ContactFormScript" 
+                 handlerUniqueId="{HANDLER-GUID-1}" 
+                 enabled="true" 
+                 parameters=""
+                 passExecutionContext="true" />
+      </Handlers>
+    </event>
+  </events>
+</form>
