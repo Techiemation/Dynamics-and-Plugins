@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form Script Tests - FRD-UI-001</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            border-bottom: 2px solid #007acc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .test-results {
+            margin-top: 20px;
+        }
+        .test-summary {
+            background-color: #f0f8ff;
+            border: 1px solid #007acc;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .test-item {
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border-left: 4px solid;
+        }
+        .test-passed {
+            background-color: #d4edda;
+            border-left-color: #28a745;
+            color: #155724;
+        }
+        .test-failed {
+            background-color: #f8d7da;
+            border-left-color: #dc3545;
+            color: #721c24;
+        }
+        .test-error {
+            background-color: #fff3cd;
+            border-left-color: #ffc107;
+            color: #856404;
+        }
+        .run-button {
+            background-color: #007acc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .run-button:hover {
+            background-color: #005a9c;
+        }
+        .console-output {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .requirement-info {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Contact Form Script Tests</h1>
+            <p><strong>Requirement:</strong> FRD-UI-001 - Show/Hide "Secondary Email" Field Based on "Has Secondary Email?" Option</p>
+        </div>
+
+        <div class="requirement-info">
+            <h3>Test-Case Based Development Flow:</h3>
+            <p>Following AI-driven test methodology to validate conditional field visibility logic:</p>
+            <ul>
+                <li>✅ Auto-generated test cases for basic functionality</li>
+                <li>✅ Enhanced with edge cases (null/undefined states)</li>
+                <li>✅ Comprehensive validation of field visibility behavior</li>
+                <li>✅ Error handling and graceful degradation</li>
+            </ul>
+        </div>
+
+        <button class="run-button" onclick="runTests()">🚀 Run All Tests</button>
+
+        <div class="test-results" id="testResults" style="display: none;">
+            <div class="test-summary" id="testSummary"></div>
+            <div id="testDetails"></div>
+        </div>
+
+        <div class="console-output" id="consoleOutput" style="display: none;"></div>
+    </div>
+
+    <!-- Include the main script and test suite -->
+    <script src="../src/Contact/Forms/Scripts/ContactFormScript.js"></script>
+    <script src="../tests/ContactFormScript.test.js"></script>
+
+    <script>
+        // Custom console implementation to capture output
+        const originalConsole = {
+            log: console.log,
+            error: console.error,
+            warn: console.warn
+        };
+
+        let consoleBuffer = '';
+
+        function captureConsole() {
+            console.log = function(...args) {
+                consoleBuffer += args.join(' ') + '\n';
+                originalConsole.log.apply(console, args);
+            };
+
+            console.error = function(...args) {
+                consoleBuffer += 'ERROR: ' + args.join(' ') + '\n';
+                originalConsole.error.apply(console, args);
+            };
+
+            console.warn = function(...args) {
+                consoleBuffer += 'WARN: ' + args.join(' ') + '\n';
+                originalConsole.warn.apply(console, args);
+            };
+        }
+
+        function restoreConsole() {
+            console.log = originalConsole.log;
+            console.error = originalConsole.error;
+            console.warn = originalConsole.warn;
+        }
+
+        function runTests() {
+            // Clear previous results
+            consoleBuffer = '';
+            TestSuite.results = [];
+
+            // Capture console output
+            captureConsole();
+
+            try {
+                // Run the test suite
+                const results = TestSuite.runAllTests();
+
+                // Display results
+                displayTestResults(results);
+
+                // Show console output
+                document.getElementById('consoleOutput').textContent = consoleBuffer;
+                document.getElementById('consoleOutput').style.display = 'block';
+
+                // Show results section
+                document.getElementById('testResults').style.display = 'block';
+
+            } finally {
+                // Restore console
+                restoreConsole();
+            }
+        }
+
+        function displayTestResults(results) {
+            const summaryDiv = document.getElementById('testSummary');
+            const detailsDiv = document.getElementById('testDetails');
+
+            // Summary
+            const passRate = Math.round((results.passed / results.total) * 100);
+            summaryDiv.innerHTML = `
+                <h3>Test Results Summary</h3>
+                <p><strong>Total Tests:</strong> ${results.total}</p>
+                <p><strong>✅ Passed:</strong> ${results.passed}</p>
+                <p><strong>❌ Failed:</strong> ${results.failed}</p>
+                <p><strong>🚨 Errors:</strong> ${results.errors}</p>
+                <p><strong>Pass Rate:</strong> ${passRate}%</p>
+                ${results.passed === results.total ? 
+                    '<p style="color: #28a745; font-weight: bold;">🎉 All tests passed! Implementation meets requirements.</p>' :
+                    '<p style="color: #dc3545; font-weight: bold;">⚠️ Some tests failed. Review implementation.</p>'
+                }
+            `;
+
+            // Details
+            let detailsHtml = '<h3>Individual Test Results</h3>';
+            results.results.forEach(result => {
+                const statusClass = result.status.toLowerCase() === 'passed' ? 'test-passed' : 
+                                   result.status.toLowerCase() === 'failed' ? 'test-failed' : 'test-error';
+                
+                detailsHtml += `
+                    <div class="${statusClass} test-item">
+                        <strong>${result.status}:</strong> ${result.name}
+                        <br><em>${result.message}</em>
+                    </div>
+                `;
+            });
+
+            detailsDiv.innerHTML = detailsHtml;
+        }
+
+        // Add some styling for better UX
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Test runner loaded. Ready to test FRD-UI-001 implementation.');
+        });
+    </script>
+</body>
+</html>
